@@ -4,16 +4,16 @@ Skynet is a witty and responsive Discord bot that helps automate tasks, provide 
 
 
 ## Table of Contents
-- [What is Skynet?](https://github.com/anand-shete/Skynet/edit/main/README.md#skynet--your-personal-discord-assistant-)
-- [Demo Link](https://github.com/anand-shete/Skynet/edit/main/README.md#demo-link)
-- [Features of Skynet](https://github.com/anand-shete/Skynet/edit/main/README.md#-features)
-- [Tech Stack](https://github.com/anand-shete/Skynet/edit/main/README.md#%EF%B8%8F-tech-stack)
-- [Local Development](https://github.com/anand-shete/Skynet/edit/main/README.md#-local-development)
-- [Production Deployment](https://github.com/anand-shete/Skynet/edit/main/README.md#-production-deployment)
-- [Personality Config](https://github.com/anand-shete/Skynet/edit/main/README.md#-personality-config)
-- [Security](https://github.com/anand-shete/Skynet/edit/main/README.md#-security)
-- [Contributing](https://github.com/anand-shete/Skynet/edit/main/README.md#-contributing)
-- [License](https://github.com/anand-shete/Skynet/edit/main/README.md#-license)
+- [What is Skynet?](https://github.com/anand-shete/Skynet?tab=readme-ov-file#skynet--your-personal-discord-assistant-)
+- [Demo Link](https://github.com/anand-shete/Skynet?tab=readme-ov-file#demo-link)
+- [Features of Skynet](https://github.com/anand-shete/Skynet?tab=readme-ov-file#-features)
+- [Tech Stack](https://github.com/anand-shete/Skynet?tab=readme-ov-file#%EF%B8%8F-tech-stack)
+- [Local Development](https://github.com/anand-shete/Skynet?tab=readme-ov-file#-local-development)
+- [Production Deployment](https://github.com/anand-shete/Skynet?tab=readme-ov-file#-production-deployment)
+- [Personality Config](https://github.com/anand-shete/Skynet?tab=readme-ov-file#-personality-config)
+- [Security](https://github.com/anand-shete/Skynet?tab=readme-ov-file#-security)
+- [Contributing](https://github.com/anand-shete/Skynet?tab=readme-ov-file#-contributing)
+- [License](https://github.com/anand-shete/Skynet?tab=readme-ov-file#-license)
 
 
 ## Demo Link
