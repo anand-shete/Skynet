@@ -1,0 +1,9 @@
+node_modules
+.env
+.prettierrc
+*.txt
+.git
+
+
+Dockerfile
+.dockerignore

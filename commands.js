@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { REST, Routes } from "discord.js";
 
-// We can create new commands. These are triggered by entering a "/". Along with these, there are many many in commands avaiable by default. You need to execute this after you add or update commands.
+// You can create new commands. These are triggered by entering a "/". Along with these, there are many many in commands avaiable by default. You need to execute this after you add or update commands.
 const commands = [
   {
     name: "about",
