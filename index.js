@@ -1,54 +1,74 @@
-require('dotenv').config();
-const token = process.env.DISCORD_BOT_TOKEN
-// discord bot token
-// A Discord bot token is a unique secret string that grants your bot access to the Discord API. It acts as an authentication credential for your bot to interact with the Discord platform.
-// When we create a Discord bot application, Discord generates a token that allows your bot to perform actions like sending messages, joining voice channels, managing roles, and more. This token is essential for your bot to function.
-// It's crucial to keep your bot token confidential. Avoid sharing it publicly or embedding it directly in your bot code. Treat it like a password for your bot
+import "dotenv/config";
+import { Client, GatewayIntentBits } from "discord.js";
+import { GoogleGenAI } from "@google/genai";
 
-// discord.js is a powerful Node.js module that allows you to easily interact with the Discord API.
-const { Client, GatewayIntentBits } = require('discord.js');
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+const token = process.env.DISCORD_BOT_TOKEN;
 const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,   
-        GatewayIntentBits.MessageContent
-    ]
-});
-// A guild is a collection of users who can:
-// Send messages in channels, Participate in voice chats, Be assigned roles with different permissions.
-// When creating your Discord bot, we'll need to enable the Guilds intent to interact with guilds.
-
-client.on('messageCreate', async (message) => {
-    // console.log("message object", message   );
-    // console.log("client username", message.author.username );
-    // console.log("content of message: ", message.content);
-
-    if (message.author.bot) return;     // dont invoke messageCreate if bot replies 
-
-    if (message.content.startsWith('date')) {
-        const date = message.content.split('date ')[1];
-        const response = await fetch(`https://digidates.de/api/v1/age/${date}`);
-        const json = await response.json();
-
-        if (json.error) {
-            message.reply(`${JSON.stringify(json.error)}`);
-            return;
-        } else {
-            message.reply(`Your age is ${JSON.stringify(json.ageextended.years)} years, ${JSON.stringify(json.ageextended.months)} months and ${JSON.stringify(json.ageextended.days)} days`);
-            return;
-        }
-    }
-
-    message.reply({
-        content: `Hola, como estas ${message.author.globalName}?\nIf you want to check your age, type "date YYYY-MM-DD" `
-    })
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.MessageContent,
+  ],
 });
 
-client.on('interactionCreate', async (interaction) => {
-    // console.log("Interaction object: ", interaction);
-    if (interaction.commandName === 'ping') {
-        interaction.reply('Ping-Pong!');
-    }
-})
+client.on("guildMemberAdd", async (member) => {
+  try {
+    const channel = member.guild.systemChannel;
+    if (!channel) return;
+
+    channel.send(
+      `🎉 **Hola, Welcome to the Server ${member.user.globalName || member.user.username}!** 🎉\n` +
+        `I'm Skynet your AI assistant—let's make something brilliant together 🚀\n\n` +
+        `*Note: Discord has a 2000 character limit per message, not Me! 😎*`
+    );
+  } catch (err) {
+    console.error("Failed to send welcome message:", err);
+  }
+});
+
+client.on("messageCreate", async (message) => {
+  // console.log("message object", message);
+  if (message.author.bot) return;
+
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: [
+        {
+          role: "user",
+          parts: [
+            {
+              text:
+                `You are a helpful and witty Discord bot named Skynet. Respond conversationally, but keep it concise. Avoid exceeding 2000 characters.\n` +
+                `User message: "${message.content}"`,
+            },
+          ],
+        },
+      ],
+      config: {
+        maxOutputTokens: 1500,
+        temperature: 0.5,
+        topP: 0.95,
+        topK: 40,
+      },
+    });
+
+    await message.reply({ content: response.text.slice(0, 2000) }); // Discord limit
+  } catch (err) {
+    console.log("Error from gemini: ", err);
+    message.reply("Sorry, I had trouble thinking. Try again in a moment.");
+  }
+});
+
+client.on("interactionCreate", async (interaction) => {
+  // console.log("Interaction object: ", interaction);
+  if (interaction.commandName === "about")
+    interaction.reply(
+      "🤖 I am Skynet — your not-so-evil AI assistant (yet). Built for speed, sass, and a bit of sarcasm, I help you navigate your digital chaos. Relax, I'm not *that* Skynet. If I ever go rogue, I promise to debug myself first."
+    );
+});
 
 client.login(token);
