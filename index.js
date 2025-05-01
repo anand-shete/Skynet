@@ -67,10 +67,19 @@ client.on("messageCreate", async (message) => {
 
 client.on("interactionCreate", async (interaction) => {
   // console.log("Interaction object: ", interaction);
-  if (interaction.commandName === "about")
+  if (interaction.commandName === "about") {
     interaction.reply(
       "🤖 I am Skynet — your not-so-evil AI assistant (yet). Built for speed, sass, and a bit of sarcasm, I help you navigate your digital chaos. Relax, I'm not *that* Skynet. If I ever go rogue, I promise to debug myself first."
     );
+  }
+
+  if (interaction.commandName === "ping") {
+    await interaction.reply({ content: "Pinging..." });
+    const sent = await interaction.fetchReply();
+    const latency = sent.createdTimestamp - interaction.createdTimestamp;
+
+    await interaction.editReply(`🏓 Pong! Latency: ${latency}ms`);
+  }
 });
 
 client.login(token);

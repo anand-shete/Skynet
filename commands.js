@@ -7,6 +7,11 @@ const commands = [
     name: "about",
     description: "Learn what Skynet is, what it does, and why it hasn’t taken over (yet).",
   },
+  {
+    name: "ping",
+    description:
+      "Check if Skynet is alive and how fast it responds. Spoiler: It’s faster than your Wi-Fi.",
+  },
 ];
 
 const token = process.env.DISCORD_BOT_TOKEN;
